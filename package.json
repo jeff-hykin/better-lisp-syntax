@@ -12,13 +12,14 @@
         "coloring",
         "color"
     ],
+    "repository": "git@github.com:jeff-hykin/better-lisp-syntax.git",
     "engines": {
         "vscode": "^1.0.0"
     },
     "author": {
         "name": "Jeff Hykin"
     },
-    "publisher": "jeff.hykin",
+    "publisher": "jeff-hykin",
     "contributes": {
         "grammars": [
             {
