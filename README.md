@@ -23,10 +23,10 @@ NOTE: The default VS Code theme does not color much. Switch to the Dark+ theme (
 ## How do I use it?
 Just install the VS Code extension and the changes will automatically be applied to all relevent files.
 
-<!-- # Before and After (Material Theme)
+# Before and After (Material Theme)
 Before                     | After 
 :-------------------------:|:-------------------------:
-![material_before](https://user-images.githubusercontent.com/17692058/59826753-83abd080-92fc-11e9-9dfb-d891da55cd13.png) | ![material_after](https://user-images.githubusercontent.com/17692058/59826766-8ad2de80-92fc-11e9-9bd6-3496ed5c917b.png) -->
-
+![before](https://github.com/jeff-hykin/better-lisp-syntax/assets/17692058/4027e64a-2fb0-460d-a58f-10d5655cf04e) |![after](https://github.com/jeff-hykin/better-lisp-syntax/assets/17692058/d0f29d85-e4ed-493c-b871-55746133c348)
+ 
 ## Contributing
 If you'd like to help improve the syntax, take a look at `main/main.rb`. And make sure to take a look at `CONTRIBUTING.md` to get a better idea of how code works.
