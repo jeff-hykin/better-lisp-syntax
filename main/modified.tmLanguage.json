@@ -1,136 +1,558 @@
 {
-    "scopeName": "source.lisp",
-    "uuid": "00D451C9-6B1D-11D9-8DFA-000D93589AF6",
-    "fileTypes": [
-        "lisp",
-        "cl",
-        "l",
-        "mud",
-        "el"
-    ],
-    "name": "Lisp",
-    "patterns":    [
-        "#main"
+    "comment": "This tmLanguage file is for Common Lisp.\nMap Rule (Common Lisp Token Type | tmLanguage) {\n    Accessor: support.function.accessor\n    Class: support.class\n    Condition Type: support.type.exception\n    Constant Variable: constant.language\n    Declaration: storage.type.function.declaration\n    Function: support.function.f\n    Local Function: support.function.f\n    Local Macro: storage.type.function.m\n    Macro: storage.type.function.m\n    macro lambda list: keyword.other.lambdalist\n    ordinary lambda list: keyword.other.lambdalist\n    Special Form: storage.type.function.specialform\n    Special Operator: keyword.control\n    Standard Generic Function: support.function.sgf\n    Symbol: storage.type.function.symbol\n    System Class: support.class\n    Type: support.type.t\n    Type Specifier: support.function.typespecifier\n    Variable: variable.other.constant.earmuffsplus string.regexp.earmuffsasterisk\n}\nNote: Alternatives in Regex are ordered by\nreversed alphabetical order to make sure longest match.\n\nWe try not to capture the parentheses as far as possible since\nwe would like to leave the parentheses to other specialized\nprogram to process.",
+    "scopeName": "source.commonlisp",
+    "uuid": "18AAF6A7-CE21-47DF-AD06-C066181965B6",
+    "fileTypes": ["lisp", "lsp", "l", "cl", "asd", "asdf"],
+    "foldingStartMarker": "\\(",
+    "foldingStopMarker": "\\)",
+    "keyEquivalent": "^~L",
+    "name": "Common Lisp",
+    "patterns": [
+        {
+            "include": "#comment"
+        },
+        {
+            "include": "#block-comment"
+        },
+        {
+            "include": "#string"
+        },
+        {
+            "include": "#escape"
+        },
+        {
+            "include": "#constant"
+        },
+        {
+            "include": "#lambda-list"
+        },
+        {
+            "include": "#function"
+        },
+        {
+            "include": "#style-guide"
+        },
+        {
+            "include": "#def-name"
+        },
+        {
+            "include": "#macro"
+        },
+        {
+            "include": "#symbol"
+        },
+        {
+            "include": "#special-operator"
+        },
+        {
+            "include": "#declaration"
+        },
+        {
+            "include": "#type"
+        },
+        {
+            "include": "#class"
+        },
+        {
+            "include": "#condition-type"
+        },
+        {
+            "include": "#package"
+        },
+        {
+            "include": "#variable"
+        },
+        {
+            "include": "#punctuation"
+        }
     ],
     "repository": {
-        "main": {
-            "patterns" : [
-                "#comment",
-                "#function",
-                "#function_parameters",
-                "#pattern4",
-                "#pattern5",
-                "#pattern6",
-                "#pattern7",
-                "#pattern8",
-                "#pattern9",
-                "#pattern10",
-                "#pattern11",
-                "#pattern12",
+        "comment": {
+            "begin": "(^[ \\t]+)?(?=;)",
+            "beginCaptures": {
+                "1": {
+                    "name": "punctuation.whitespace.comment.leading.commonlisp"
+                }
+            },
+            "end": "(?!\\G)",
+            "patterns": [
+                {
+                    "begin": ";",
+                    "beginCaptures": {
+                        "0": {
+                            "name": "punctuation.definition.comment.commonlisp"
+                        }
+                    },
+                    "end": "\\n",
+                    "name": "comment.line.semicolon.commonlisp"
+                }
             ]
         },
-        "comment": {
-            "captures": {
-                "1": {
-                    "name": "punctuation.definition.comment.lisp"
+        "block-comment": {
+            "begin": "\\#\\|",
+            "contentName": "comment.block.commonlisp",
+            "end": "\\|\\#",
+            "name": "comment",
+            "patterns": [
+                {
+                    "include": "#block-comment",
+                    "name": "comment"
                 }
-            },
-            "match": "(;).*$\\n?",
-            "name": "comment.line.semicolon.lisp"
+            ]
         },
-        "function": {
-            "captures": {
-                "1": {
-                    "name": "storage.type.function-type.lisp"
-                },
-                "2": {
-                    "name": "entity.name.function.lisp"
-                }
-            },
-            "match": "(?:\\()((?i:defgeneric|define-compiler-macro|define-method-combination|define-modify-macro|define-setf-expander|defmacro|defmethod|defsetf|defun||define-\\S+))\\s+((?:\\w|[+\\-<>/*&amp;=.?!$%:@\\[\\]^{}~#|])+)",
-            "name": "meta.function.lisp"
-        },
-        "function_parameters": {
-            "match": "(?<=\\s)(?i:&allow-other-keys|&aux|&body|&environment|&key|&optional|&rest|&whole)(?=\\s+)",
-            "name": "meta.function-parameters.lisp"
-        },
-        "pattern4": {
-            "captures": {
-                "1": {
-                    "name": "storage.type.function-type.lisp"
-                },
-                "2": {
-                    "name": "entity.name.type.lisp"
-                }
-            },
-            "match": "(?:\\()((?i:deftype|defstruct|define-condition|defpackage|defclass))\\s+((?:\\w|[+\\-<>/*&amp;=.?!$%:@\\[\\]^{}~#|])+)"
-        },
-        "pattern5": {
-            "captures": {
-                "1": {
-                    "name": "storage.type.function-type.lisp"
-                },
-                "2": {
-                    "name": "entity.name.variable.lisp"
-                }
-            },
-            "match": "(?:\\()((?i:defvar|defconstant|defparameter|define-symbol-macro))\\s+((?:\\w|[+\\-<>/*&amp;=.?!$%:@\\[\\]^{}~#|])+)"
-        },
-        "pattern6": {
-            "captures": {
-                "1": {
-                    "name": "punctuation.definition.constant.lisp"
-                }
-            },
-            "match": "(#)(\\w|[\\\\+-=&lt;&gt;'\\\"&amp;#])+",
-            "name": "constant.character.lisp"
-        },
-        "pattern7": {
-            "captures": {
-                "1": {
-                    "name": "punctuation.definition.variable.lisp"
-                },
-                "3": {
-                    "name": "punctuation.definition.variable.lisp"
-                }
-            },
-            "match": "(?<=^|\\s|[()])(\\*)(\\S*)(\\*)(?=$|\\s|[()])",
-            "name": "variable.other.global.lisp"
-        },
-        "pattern8": {
-            "match": "(?<=^|\\s|[()]):(\\w|[+\\-<>/*&amp;=.?!$%:@\\[\\]^{}~#|])*",
-            "name": "keyword.constant.lisp"
-        },
-        "pattern9": {
-            "match": "(?<=\\()(?i:\\*|\\*\\*|\\*\\*\\*|\\+|\\+\\+|\\+\\+\\+|\\-|/|//|///|/=|1\\+|1\\-|<|<=|=|>|>=|abort|abs|acons|acos|acosh|add-method|adjoin|adjust-array|adjustable-array-p|allocate-instance|alpha-char-p|alphanumericp|and|append|apply|apropos|apropos-list|aref|arithmetic-error|arithmetic-error-operands|arithmetic-error-operation|array|array-dimension|array-dimension-limit|array-dimensions|array-displacement|array-element-type|array-has-fill-pointer-p|array-in-bounds-p|array-rank|array-rank-limit|array-row-major-index|array-total-size|array-total-size-limit|arrayp|ash|asin|asinh|assert|assoc|assoc-if|assoc-if-not|atan|atanh|atom|base-char|base-string|bignum|bit|bit-and|bit-andc1|bit-andc2|bit-eqv|bit-ior|bit-nand|bit-nor|bit-not|bit-orc1|bit-orc2|bit-vector|bit-vector-p|bit-xor|block|boole|boole-1|boole-2|boole-and|boole-andc1|boole-andc2|boole-c1|boole-c2|boole-clr|boole-eqv|boole-ior|boole-nand|boole-nor|boole-orc1|boole-orc2|boole-set|boole-xor|boolean|both-case-p|boundp|break|broadcast-stream|broadcast-stream-streams|built-in-class|butlast|byte|byte-position|byte-size|caaaar|caaadr|caaar|caadar|caaddr|caadr|caar|cadaar|cadadr|cadar|caddar|cadddr|caddr|cadr|call-arguments-limit|call-method|call-next-method|car|case|catch|ccase|cdaaar|cdaadr|cdaar|cdadar|cdaddr|cdadr|cdar|cddaar|cddadr|cddar|cdddar|cddddr|cdddr|cddr|cdr|ceiling|cell-error|cell-error-name|cerror|change-class|char|char-code|char-code-limit|char-downcase|char-equal|char-greaterp|char-int|char-lessp|char-name|char-not-equal|char-not-greaterp|char-not-lessp|char-upcase|char/=|char<|char<=|char=|char>|char>=|character|characterp|check-type|cis|class|class-name|class-of|clear-input|clear-output|close|clrhash|code-char|coerce|compilation-speed|compile|compile-file|compile-file-pathname|compiled-function|compiled-function-p|compiler-macro|compiler-macro-function|complement|complex|complexp|compute-applicable-methods|compute-restarts|concatenate|concatenated-stream|concatenated-stream-streams|cond|condition|conjugate|cons|consp|constantly|constantp|continue|control-error|copy-alist|copy-list|copy-pprint-dispatch|copy-readtable|copy-seq|copy-structure|copy-symbol|copy-tree|cos|cosh|count|count-if|count-if-not|ctypecase|debug|decf|declaim|declaration|declare|decode-float|decode-universal-time|defclass|defconstant|defgeneric|define-compiler-macro|define-condition|define-method-combination|define-modify-macro|define-setf-expander|define-symbol-macro|defmacro|defmethod|defpackage|defparameter|defsetf|defstruct|deftype|defun|defvar|delete|delete-duplicates|delete-file|delete-if|delete-if-not|delete-package|denominator|deposit-field|describe|describe-object|destructuring-bind|digit-char|digit-char-p|directory|directory-namestring|disassemble|division-by-zero|do|do\\*|do-all-symbols|do-external-symbols|do-symbols|documentation|dolist|dotimes|double-float|double-float-epsilon|double-float-negative-epsilon|dpb|dribble|dynamic-extent|ecase|echo-stream|echo-stream-input-stream|echo-stream-output-stream|ed|eighth|elt|encode-universal-time|end-of-file|endp|enough-namestring|ensure-directories-exist|ensure-generic-function|eq|eql|equal|equalp|error|etypecase|eval|eval-when|evenp|every|exp|export|expt|extended-char|fboundp|fceiling|fdefinition|ffloor|fifth|file-author|file-error|file-error-pathname|file-length|file-namestring|file-position|file-stream|file-string-length|file-write-date|fill|fill-pointer|find|find-all-symbols|find-class|find-if|find-if-not|find-method|find-package|find-restart|find-symbol|finish-output|first|fixnum|flet|float|float-digits|float-precision|float-radix|float-sign|floating-point-inexact|floating-point-invalid-operation|floating-point-overflow|floating-point-underflow|floatp|floor|fmakunbound|force-output|format|formatter|fourth|fresh-line|fround|ftruncate|ftype|funcall|function|function-keywords|function-lambda-expression|functionp|gcd|generic-function|gensym|gentemp|get|get-decoded-time|get-dispatch-macro-character|get-internal-real-time|get-internal-run-time|get-macro-character|get-output-stream-string|get-properties|get-setf-expansion|get-universal-time|getf|gethash|go|graphic-char-p|handler-bind|handler-case|hash-table|hash-table-count|hash-table-p|hash-table-rehash-size|hash-table-rehash-threshold|hash-table-size|hash-table-test|host-namestring|identity|if|ignorable|ignore|ignore-errors|imagpart|import|in-package|incf|initialize-instance|inline|input-stream-p|inspect|integer|integer-decode-float|integer-length|integerp|interactive-stream-p|intern|internal-time-units-per-second|intersection|invalid-method-error|invoke-debugger|invoke-restart|invoke-restart-interactively|isqrt|keyword|keywordp|labels|lambda|lambda-list-keywords|lambda-parameters-limit|last|lcm|ldb|ldb-test|ldiff|least-negative-double-float|least-negative-long-float|least-negative-normalized-double-float|least-negative-normalized-long-float|least-negative-normalized-short-float|least-negative-normalized-single-float|least-negative-short-float|least-negative-single-float|least-positive-double-float|least-positive-long-float|least-positive-normalized-double-float|least-positive-normalized-long-float|least-positive-normalized-short-float|least-positive-normalized-single-float|least-positive-short-float|least-positive-single-float|length|let|let\\*|lisp-implementation-type|lisp-implementation-version|list|list\\*|list-all-packages|list-length|listen|listp|load|load-logical-pathname-translations|load-time-value|locally|log|logand|logandc1|logandc2|logbitp|logcount|logeqv|logical-pathname|logical-pathname-translations|logior|lognand|lognor|lognot|logorc1|logorc2|logtest|logxor|long-float|long-float-epsilon|long-float-negative-epsilon|long-site-name|loop|loop-finish|lower-case-p|machine-instance|machine-type|machine-version|macro-function|macroexpand|macroexpand-1|macrolet|make-array|make-broadcast-stream|make-concatenated-stream|make-condition|make-dispatch-macro-character|make-echo-stream|make-hash-table|make-instance|make-instances-obsolete|make-list|make-load-form|make-load-form-saving-slots|make-method|make-package|make-pathname|make-random-state|make-sequence|make-string|make-string-input-stream|make-string-output-stream|make-symbol|make-synonym-stream|make-two-way-stream|makunbound|map|map-into|mapc|mapcan|mapcar|mapcon|maphash|mapl|maplist|mask-field|max|member|member-if|member-if-not|merge|merge-pathnames|method|method-combination|method-combination-error|method-qualifiers|min|minusp|mismatch|mod|most-negative-double-float|most-negative-fixnum|most-negative-long-float|most-negative-short-float|most-negative-single-float|most-positive-double-float|most-positive-fixnum|most-positive-long-float|most-positive-short-float|most-positive-single-float|muffle-warning|multiple-value-bind|multiple-value-call|multiple-value-list|multiple-value-prog1|multiple-value-setq|multiple-values-limit|name-char|namestring|nbutlast|nconc|next-method-p|nil|nintersection|ninth|no-applicable-method|no-next-method|not|notany|notevery|notinline|nreconc|nreverse|nset-difference|nset-exclusive-or|nstring-capitalize|nstring-downcase|nstring-upcase|nsublis|nsubst|nsubst-if|nsubst-if-not|nsubstitute|nsubstitute-if|nsubstitute-if-not|nth|nth-value|nthcdr|null|number|numberp|numerator|nunion|oddp|open|open-stream-p|optimize|or|otherwise|output-stream-p|package|package-error|package-error-package|package-name|package-nicknames|package-shadowing-symbols|package-use-list|package-used-by-list|packagep|pairlis|parse-error|parse-integer|parse-namestring|pathname|pathname-device|pathname-directory|pathname-host|pathname-match-p|pathname-name|pathname-type|pathname-version|pathnamep|peek-char|phase|pi|plusp|pop|position|position-if|position-if-not|pprint|pprint-dispatch|pprint-exit-if-list-exhausted|pprint-fill|pprint-indent|pprint-linear|pprint-logical-block|pprint-newline|pprint-pop|pprint-tab|pprint-tabular|prin1|prin1-to-string|princ|princ-to-string|print|print-not-readable|print-not-readable-object|print-object|print-unreadable-object|probe-file|proclaim|prog|prog\\*|prog1|prog2|progn|program-error|progv|provide|psetf|psetq|push|pushnew|quote|random|random-state|random-state-p|rassoc|rassoc-if|rassoc-if-not|ratio|rational|rationalize|rationalp|read|read-byte|read-char|read-char-no-hang|read-delimited-list|read-from-string|read-line|read-preserving-whitespace|read-sequence|reader-error|readtable|readtable-case|readtablep|real|realp|realpart|reduce|reinitialize-instance|rem|remf|remhash|remove|remove-duplicates|remove-if|remove-if-not|remove-method|remprop|rename-file|rename-package|replace|require|rest|restart|restart-bind|restart-case|restart-name|return|return-from|revappend|reverse|room|rotatef|round|row-major-aref|rplaca|rplacd|safety|satisfies|sbit|scale-float|schar|search|second|sequence|serious-condition|set|set-difference|set-dispatch-macro-character|set-exclusive-or|set-macro-character|set-pprint-dispatch|set-syntax-from-char|setf|setq|seventh|shadow|shadowing-import|shared-initialize|shiftf|short-float|short-float-epsilon|short-float-negative-epsilon|short-site-name|signal|signed-byte|signum|simple-array|simple-base-string|simple-bit-vector|simple-bit-vector-p|simple-condition|simple-condition-format-arguments|simple-condition-format-control|simple-error|simple-string|simple-string-p|simple-type-error|simple-vector|simple-vector-p|simple-warning|sin|single-float|single-float-epsilon|single-float-negative-epsilon|sinh|sixth|sleep|slot-boundp|slot-exists-p|slot-makunbound|slot-missing|slot-unbound|slot-value|software-type|software-version|some|sort|space|special|special-operator-p|speed|sqrt|stable-sort|standard|standard-char|standard-char-p|standard-class|standard-generic-function|standard-method|standard-object|step|storage-condition|store-value|stream|stream-element-type|stream-error|stream-error-stream|stream-external-format|streamp|string|string-capitalize|string-downcase|string-equal|string-greaterp|string-left-trim|string-lessp|string-not-equal|string-not-greaterp|string-not-lessp|string-right-trim|string-stream|string-trim|string-upcase|string/=|string<|string<=|string=|string>|string>=|stringp|structure|structure-class|structure-object|style-warning|sublis|subseq|subsetp|subst|subst-if|subst-if-not|substitute|substitute-if|substitute-if-not|subtypep|svref|sxhash|symbol|symbol-function|symbol-macrolet|symbol-name|symbol-package|symbol-plist|symbol-value|symbolp|synonym-stream|synonym-stream-symbol|t|tagbody|tailp|tan|tanh|tenth|terpri|the|third|throw|time|trace|translate-logical-pathname|translate-pathname|tree-equal|truename|truncate|two-way-stream|two-way-stream-input-stream|two-way-stream-output-stream|type|type-error|type-error-datum|type-error-expected-type|type-of|typecase|typep|unbound-slot|unbound-slot-instance|unbound-variable|undefined-function|unexport|unintern|union|unless|unread-char|unsigned-byte|untrace|unuse-package|unwind-protect|update-instance-for-different-class|update-instance-for-redefined-class|upgraded-array-element-type|upgraded-complex-part-type|upper-case-p|use-package|use-value|user-homedir-pathname|values|values-list|variable|vector|vector-pop|vector-push|vector-push-extend|vectorp|warn|warning|when|wild-pathname-p|with-accessors|with-compilation-unit|with-condition-restarts|with-hash-table-iterator|with-input-from-string|with-open-file|with-open-stream|with-output-to-string|with-package-iterator|with-simple-restart|with-slots|with-standard-io-syntax|write|write-byte|write-char|write-line|write-sequence|write-string|write-to-string|y-or-n-p|yes-or-no-p|zerop|with-\\S+)(?=\\s+)",
-            "name": "keyword.control.lisp"
-        },
-        "pattern10": {
-            "match": "(?<=^|\\s|[()])(?i:nil|t)(?=$|\\s|[()])",
-            "name": "constant.language.lisp"
-        },
-        "pattern11": {
-            "match": "\\b((0(x|X)[0-9a-fA-F]*)|(([0-9]+\\.?[0-9]*)|(\\.[0-9]+))((e|E)(\\+|-)?[0-9]+)?)(L|l|UL|ul|u|U|F|f|ll|LL|ull|ULL)?\\b",
-            "name": "constant.numeric.lisp"
-        },
-        "pattern12": {
-            "begin": "\"",
+        "string": {
+            "begin": "(\")",
             "beginCaptures": {
-                "0": {
-                    "name": "punctuation.definition.string.begin.lisp"
+                "1": {
+                    "name": "punctuation.definition.string.begin.commonlisp"
                 }
             },
-            "end": "\"",
+            "end": "(\")",
             "endCaptures": {
-                "0": {
-                    "name": "punctuation.definition.string.end.lisp"
+                "1": {
+                    "name": "punctuation.definition.string.end.commonlisp"
                 }
             },
-            "name": "string.quoted.double.lisp",
-            "patterns":     [
+            "name": "string.quoted.double.commonlisp",
+            "patterns": [
                 {
                     "match": "\\\\.",
-                    "name": "constant.character.escape.lisp"
+                    "name": "constant.character.escape.commonlisp"
+                },
+                {
+                    "match": "(?xi)\n\n(~) #1 tilde\n(\n    (\n        (([+-]?[0-9]+)|('.)|V|\\#)*?\n        (,)?\n    )\n*?) #2 prefix parameters, signed decimal numbers|single char, separated by commas\n(\n    (:@|@:|:|@)\n?) #8 modifiers\n(\\(|\\)|\\[|\\]|;|{|}|<|>|\\^) #10 control structures",
+                    "captures": {
+                        "1": {
+                            "name": "storage.type.function.formattedstring.commonlisp"
+                        },
+                        "2": {
+                            "name": "variable.other.constant.formattedstring.commonlisp"
+                        },
+                        "8": {
+                            "name": "storage.type.function.formattedstring.commonlisp"
+                        },
+                        "10": {
+                            "name": "storage.type.function.formattedstring.commonlisp"
+                        }
+                    }
+                },
+                {
+                    "match": "(?xi)\n\n(~) #1 tilde\n(\n    (\n        (([+-]?[0-9]+)|('.)|V|\\#)*?\n        (,)?\n    )\n*?) #2 prefix parameters, signed decimal numbers|single char, separated by commas\n(\n    (:@|@:|:|@)\n?) #8 modifiers\n(A|S|D|B|O|X|R|P|C|F|E|G|\\$|%|\\&|\\||~|T|\\*|\\?|_|W|I) #10 directives",
+                    "captures": {
+                        "1": {
+                            "name": "entity.name.variable.commonlisp"
+                        },
+                        "2": {
+                            "name": "variable.other.constant.formattedstring.commonlisp"
+                        },
+                        "8": {
+                            "name": "entity.name.variable.commonlisp"
+                        },
+                        "10": {
+                            "name": "entity.name.variable.commonlisp"
+                        }
+                    }
+                },
+                {
+                    "match": "(?xi)\n\n(~) #1 tilde\n(\n    (\n        (([+-]?[0-9]+)|('.)|V|\\#)*?\n        (,)?\n    )\n*?) #2 prefix parameters, signed decimal numbers|single char, separated by commas\n(\n    (:@|@:|:|@)\n?) #8 modifiers\n(\\/) #10\n([#:A-Za-z0-9\\+\\-\\*\\/\\@\\$\\%\\^\\&\\_\\=\\<\\>\\~\\!\\?\\[\\]\\{\\}\\.]+?) #11 call function\n(\\/) #12",
+                    "captures": {
+                        "1": {
+                            "name": "entity.name.variable.commonlisp"
+                        },
+                        "2": {
+                            "name": "variable.other.constant.formattedstring.commonlisp"
+                        },
+                        "8": {
+                            "name": "entity.name.variable.commonlisp"
+                        },
+                        "10": {
+                            "name": "entity.name.variable.commonlisp"
+                        },
+                        "11": {
+                            "name": "entity.name.variable.commonlisp"
+                        },
+                        "12": {
+                            "name": "entity.name.variable.commonlisp"
+                        }
+                    }
+                },
+                {
+                    "match": "(~\\n)",
+                    "name": "variable.other.constant.formattedstring.commonlisp"
+                }
+            ]
+        },
+        "escape": {
+            "match": "(?xi)\n(?<=^|\\s|\\() # preceded by space or (\n(?:\\#\\\\\\S+?)\n(?=(\\s|\\(|\\)))  # followed by space, ( or )",
+            "name": "constant.character.escape.commonlisp"
+        },
+        "constant": {
+            "patterns": [
+                {
+                    "match": "(?xi)\n(?<=^|\\s|\\() # preceded by space or (\n(?:t|single-float-negative-epsilon|single-float-epsilon|short-float-negative-epsilon|short-float-epsilon|pi|\nnil|multiple-values-limit|most-positive-single-float|most-positive-short-float|most-positive-long-float|\nmost-positive-fixnum|most-positive-double-float|most-negative-single-float|most-negative-short-float|\nmost-negative-long-float|most-negative-fixnum|most-negative-double-float|long-float-negative-epsilon|\nlong-float-epsilon|least-positive-single-float|least-positive-short-float|least-positive-normalized-single-float|\nleast-positive-normalized-short-float|least-positive-normalized-long-float|least-positive-normalized-double-float|\nleast-positive-long-float|least-positive-double-float|least-negative-single-float|least-negative-short-float|\nleast-negative-normalized-single-float|least-negative-normalized-short-float|least-negative-normalized-long-float|\nleast-negative-normalized-double-float|least-negative-long-float|least-negative-double-float|lambda-parameters-limit|\nlambda-list-keywords|internal-time-units-per-second|double-float-negative-epsilon|double-float-epsilon|char-code-limit|\ncall-arguments-limit|boole-xor|boole-set|boole-orc2|boole-orc1|boole-nor|boole-nand|boole-ior|boole-eqv|boole-clr|\nboole-c2|boole-c1|boole-andc2|boole-andc1|boole-and|boole-2|boole-1|array-total-size-limit|array-rank-limit|array-dimension-limit)\n(?=(\\s|\\(|\\))) # followed by space, ( or )",
+                    "name": "constant.language.commonlisp"
+                },
+                {
+                    "match": "(?x)\n(?<=^|\\s|\\()                           # preceded by space or (\n([+-]?[0-9]+(?:\\/[0-9]+)*|                # ratio\n[-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?|   # integer, float\n(\\#b|\\#B)[01\\/+-]+|(\\#o|\\#O)[0-7\\/+-]+|(\\#x|\\#X)[0-9a-fA-F\\/+-]+|(\\#[0-9]+[rR]?)[0-9a-zA-Z\\/+-]+)\n(?=(\\s|\\)))                               # followed by space, )",
+                    "name": "constant.numeric.commonlisp"
+                },
+                {
+                    "match": "(?xi)\n(?<=\\s) # preceded by space or (\n(\\.)\n(?=\\s)",
+                    "name": "variable.other.constant.dot.commonlisp"
+                },
+                {
+                    "match": "(?x)\n(?<=^|\\s|\\()                           # preceded by space or (\n([+-]?[0-9]*\\.[0-9]*((e|s|f|d|l|E|S|F|D|L)[+-]?[0-9]+)?|\n[+-]?[0-9]+(\\.[0-9]*)?(e|s|f|d|l|E|S|F|D|L)[+-]?[0-9]+)\n(?=(\\s|\\)))                               # followed by space, )",
+                    "name": "constant.numeric.commonlisp"
+                }
+            ]
+        },
+        "lambda-list": {
+            "match": "(?xi)\n(?<=^|\\s|\\() # preceded by space or (\n(?:&[#:A-Za-z0-9\\+\\-\\*\\/\\@\\$\\%\\^\\&\\_\\=\\<\\>\\~\\!\\?\\[\\]\\{\\}\\.]+?|&whole|&rest|&optional|&key|&environment|&body|&aux|&allow-other-keys)\n(?=(\\s|\\(|\\))) # followed by space, ( or )",
+            "name": "keyword.other.lambdalist.commonlisp"
+        },
+        "function": {
+            "patterns": [
+                {
+                    "match": "(?xi)\n(?<=^|\\s|\\(|\\#') # preceded by space or (\n(?:values|third|tenth|symbol-value|symbol-plist|symbol-function|svref|subseq|sixth|seventh|second|schar|sbit|row-major-aref|\n   rest|readtable-case|nth|ninth|mask-field|macro-function|logical-pathname-translations|ldb|gethash|getf|get|fourth|first|\n   find-class|fill-pointer|fifth|fdefinition|elt|eighth|compiler-macro-function|char|cdr|cddr|cdddr|cddddr|cdddar|cddar|cddadr|\n   cddaar|cdar|cdadr|cdaddr|cdadar|cdaar|cdaadr|cdaaar|car|cadr|caddr|cadddr|caddar|cadar|cadadr|cadaar|caar|caadr|caaddr|caadar|\n   caaar|caaadr|caaaar|bit|aref)\n(?=(\\s|\\(|\\)))  # followed by space, ( or )",
+                    "name": "support.function.accessor.commonlisp"
+                },
+                {
+                    "match": "(?xi)\n(?<=^|\\s|\\(|\\#') # preceded by space or (\n(?:yes-or-no-p|y-or-n-p|write-sequence|write-char|write-byte|warn|vector-pop|use-value|use-package|unuse-package|union|unintern|\nunexport|terpri|tailp|substitute-if-not|substitute-if|substitute|subst-if-not|subst-if|subst|sublis|string-upcase|string-downcase|\nstring-capitalize|store-value|sleep|signal|shadowing-import|shadow|set-syntax-from-char|set-macro-character|set-exclusive-or|\nset-dispatch-macro-character|set-difference|set|rplacd|rplaca|room|reverse|revappend|require|replace|remprop|remove-if-not|remove-if|\nremove-duplicates|remove|remhash|read-sequence|read-byte|random|provide|pprint-tabular|pprint-newline|pprint-linear|pprint-fill|\nnunion|nsubstitute-if-not|nsubstitute-if|nsubstitute|nsubst-if-not|nsubst-if|nsubst|nsublis|nstring-upcase|nstring-downcase|nstring-capitalize|\nnset-exclusive-or|nset-difference|nreverse|nreconc|nintersection|nconc|muffle-warning|method-combination-error|maphash|makunbound|ldiff|\ninvoke-restart-interactively|invoke-restart|invoke-debugger|invalid-method-error|intersection|inspect|import|get-output-stream-string|\nget-macro-character|get-dispatch-macro-character|gentemp|gensym|fresh-line|fill|file-position|export|describe|delete-if-not|delete-if|\ndelete-duplicates|delete|continue|clrhash|close|clear-input|break|abort)\n(?=(\\s|\\(|\\))) # followed by space, ( or )",
+                    "name": "support.function.f.sideeffects.commonlisp"
+                },
+                {
+                    "match": "(?xi)\n(?<=^|\\s|\\(|\\#') # preceded by space or (\n(?:zerop|write-to-string|write-string|write-line|write|wild-pathname-p|vectorp|vector-push-extend|vector-push|vector|values-list|\nuser-homedir-pathname|upper-case-p|upgraded-complex-part-type|upgraded-array-element-type|unread-char|unbound-slot-instance|typep|type-of|\ntype-error-expected-type|type-error-datum|two-way-stream-output-stream|two-way-stream-input-stream|truncate|truename|tree-equal|translate-pathname|\ntranslate-logical-pathname|tanh|tan|synonym-stream-symbol|symbolp|symbol-package|symbol-name|sxhash|subtypep|subsetp|stringp|string>=|string>|\nstring=|string<=|string<|string\\/=|string-trim|string-right-trim|string-not-lessp|string-not-greaterp|string-not-equal|string-lessp|\nstring-left-trim|string-greaterp|string-equal|string|streamp|stream-external-format|stream-error-stream|stream-element-type|standard-char-p|\nstable-sort|sqrt|special-operator-p|sort|some|software-version|software-type|slot-value|slot-makunbound|slot-exists-p|slot-boundp|sinh|sin|\nsimple-vector-p|simple-string-p|simple-condition-format-control|simple-condition-format-arguments|simple-bit-vector-p|signum|short-site-name|\nset-pprint-dispatch|search|scale-float|round|restart-name|rename-package|rename-file|rem|reduce|realpart|realp|readtablep|\nread-preserving-whitespace|read-line|read-from-string|read-delimited-list|read-char-no-hang|read-char|read|rationalp|rationalize|\nrational|rassoc-if-not|rassoc-if|rassoc|random-state-p|proclaim|probe-file|print-not-readable-object|print|princ-to-string|princ|\nprin1-to-string|prin1|pprint-tab|pprint-indent|pprint-dispatch|pprint|position-if-not|position-if|position|plusp|phase|peek-char|pathnamep|\npathname-version|pathname-type|pathname-name|pathname-match-p|pathname-host|pathname-directory|pathname-device|pathname|parse-namestring|\nparse-integer|pairlis|packagep|package-used-by-list|package-use-list|package-shadowing-symbols|package-nicknames|package-name|package-error-package|\noutput-stream-p|open-stream-p|open|oddp|numerator|numberp|null|nthcdr|notevery|notany|not|next-method-p|nbutlast|namestring|name-char|mod|mismatch|\nminusp|min|merge-pathnames|merge|member-if-not|member-if|member|max|maplist|mapl|mapcon|mapcar|mapcan|mapc|map-into|map|make-two-way-stream|\nmake-synonym-stream|make-symbol|make-string-output-stream|make-string-input-stream|make-string|make-sequence|make-random-state|make-pathname|\nmake-package|make-load-form-saving-slots|make-list|make-hash-table|make-echo-stream|make-dispatch-macro-character|make-condition|\nmake-concatenated-stream|make-broadcast-stream|make-array|macroexpand-1|macroexpand|machine-version|machine-type|machine-instance|lower-case-p|\nlong-site-name|logxor|logtest|logorc2|logorc1|lognot|lognor|lognand|logior|logical-pathname|logeqv|logcount|logbitp|logandc2|logandc1|logand|\nlog|load-logical-pathname-translations|load|listp|listen|list-length|list-all-packages|list\\*|list|lisp-implementation-version|\nlisp-implementation-type|length|ldb-test|lcm|last|keywordp|isqrt|intern|interactive-stream-p|integerp|integer-length|integer-decode-float|\ninput-stream-p|imagpart|identity|host-namestring|hash-table-test|hash-table-size|hash-table-rehash-threshold|hash-table-rehash-size|hash-table-p|\nhash-table-count|graphic-char-p|get-universal-time|get-setf-expansion|get-properties|get-internal-run-time|get-internal-real-time|\nget-decoded-time|gcd|functionp|function-lambda-expression|funcall|ftruncate|fround|format|force-output|fmakunbound|floor|floatp|float-sign|\nfloat-radix|float-precision|float-digits|float|finish-output|find-symbol|find-restart|find-package|find-if-not|find-if|find-all-symbols|find|\nfile-write-date|file-string-length|file-namestring|file-length|file-error-pathname|file-author|ffloor|fceiling|fboundp|expt|exp|every|evenp|\neval|equalp|equal|eql|eq|ensure-generic-function|ensure-directories-exist|enough-namestring|endp|encode-universal-time|ed|echo-stream-output-stream|\necho-stream-input-stream|dribble|dpb|disassemble|directory-namestring|directory|digit-char-p|digit-char|deposit-field|denominator|delete-package|\ndelete-file|decode-universal-time|decode-float|count-if-not|count-if|count|cosh|cos|copy-tree|copy-symbol|copy-structure|copy-seq|copy-readtable|\ncopy-pprint-dispatch|copy-list|copy-alist|constantp|constantly|consp|cons|conjugate|concatenated-stream-streams|concatenate|compute-restarts|\ncomplexp|complex|complement|compiled-function-p|compile-file-pathname|compile-file|compile|coerce|code-char|clear-output|class-of|cis|characterp|\ncharacter|char>=|char>|char=|char<=|char<|char\\/=|char-upcase|char-not-lessp|char-not-greaterp|char-not-equal|char-name|char-lessp|char-int|\nchar-greaterp|char-equal|char-downcase|char-code|cerror|cell-error-name|ceiling|call-next-method|byte-size|byte-position|byte|butlast|\nbroadcast-stream-streams|boundp|both-case-p|boole|bit-xor|bit-vector-p|bit-orc2|bit-orc1|bit-not|bit-nor|bit-nand|bit-ior|bit-eqv|bit-andc2|\nbit-andc1|bit-and|atom|atanh|atan|assoc-if-not|assoc-if|assoc|asinh|asin|ash|arrayp|array-total-size|array-row-major-index|array-rank|\narray-in-bounds-p|array-has-fill-pointer-p|array-element-type|array-displacement|array-dimensions|array-dimension|arithmetic-error-operation|\narithmetic-error-operands|apropos-list|apropos|apply|append|alphanumericp|alpha-char-p|adjustable-array-p|adjust-array|adjoin|acosh|acos|acons|\nabs|>=|>|=|<=|<|1-|1\\+|\\/=|\\/|-|\\+|\\*)\n(?=(\\s|\\(|\\))) # followed by space, ( or )",
+                    "name": "support.function.f.sideeffects.commonlisp"
+                },
+                {
+                    "match": "(?xi)\n(?<=^|\\s|\\(|\\#') # preceded by space or (\n(?:variable|update-instance-for-redefined-class|update-instance-for-different-class|structure|slot-unbound|slot-missing|shared-initialize|\nremove-method|print-object|no-next-method|no-applicable-method|method-qualifiers|make-load-form|make-instances-obsolete|make-instance|\ninitialize-instance|function-keywords|find-method|documentation|describe-object|compute-applicable-methods|compiler-macro|class-name|\nchange-class|allocate-instance|add-method)\n(?=(\\s|\\(|\\)))  # followed by space, ( or )",
+                    "name": "support.function.sgf.nosideeffects.commonlisp"
+                },
+                {
+                    "match": "(?xi)\n(?<=^|\\s|\\(|\\#') # preceded by space or (\n(?:reinitialize-instance)\n(?=(\\s|\\(|\\)))  # followed by space, ( or )",
+                    "name": "support.function.sgf.sideeffects.commonlisp"
+                },
+                {
+                    "match": "(?xi)\n(?<=^|\\s|\\(|\\#') # preceded by space or (\n(?:satisfies)\n(?=(\\s|\\(|\\)))  # followed by space, ( or )",
+                    "name": "support.function.typespecifier.commonlisp"
+                }
+            ]
+        },
+        "macro": {
+            "patterns": [
+                {
+                    "match": "(?xi)\n(?<=^|\\s|\\() # preceded by space or (\n(?:with-standard-io-syntax|with-slots|with-simple-restart|with-package-iterator|with-hash-table-iterator|with-condition-restarts|\nwith-compilation-unit|with-accessors|when|unless|typecase|time|step|shiftf|setf|rotatef|return|restart-case|restart-bind|psetf|prog2|prog1|\nprog\\*|prog|print-unreadable-object|pprint-logical-block|pprint-exit-if-list-exhausted|or|nth-value|multiple-value-setq|multiple-value-list|\nmultiple-value-bind|make-method|loop|lambda|ignore-errors|handler-case|handler-bind|formatter|etypecase|dotimes|dolist|do-symbols|do-external-symbols|\ndo-all-symbols|do\\*|do|destructuring-bind|defun|deftype|defstruct|defsetf|defpackage|defmethod|defmacro|define-symbol-macro|define-setf-expander|\ndefine-condition|define-compiler-macro|defgeneric|defconstant|defclass|declaim|ctypecase|cond|call-method|assert|and)\n(?=(\\s|\\(|\\)))  # followed by space, ( or )",
+                    "name": "storage.type.function.m.nosideeffects.commonlisp"
+                },
+                {
+                    "match": "(?xi)\n(?<=^|\\s|\\() # preceded by space or (\n(?:with-output-to-string|with-open-stream|with-open-file|with-input-from-string|untrace|trace|remf|pushnew|push|psetq|pprint-pop|pop|\notherwise|loop-finish|incf|in-package|ecase|defvar|defparameter|define-modify-macro|define-method-combination|decf|check-type|ccase|case)\n(?=(\\s|\\(|\\)))  # followed by space, ( or )",
+                    "name": "storage.type.function.m.sideeffects.commonlisp"
+                },
+                {
+                    "match": "(?xi)\n(?<=^|\\s|\\() # preceded by space or (\n(?:setq)\n(?=(\\s|\\(|\\)))  # followed by space, ( or )",
+                    "name": "storage.type.function.specialform.commonlisp"
+                }
+            ]
+        },
+        "symbol": {
+            "match": "(?xi)\n(?<=^|\\s|\\() # preceded by space or (\n(?:method-combination|declare)\n(?=(\\s|\\(|\\)))  # followed by space, ( or )",
+            "name": "storage.type.function.symbol.commonlisp"
+        },
+        "special-operator": {
+            "match": "(?xi)\n(\\(\\s*) # preceded by (\n(unwind-protect|throw|the|tagbody|symbol-macrolet|return-from|quote|progv|progn|multiple-value-prog1|multiple-value-call|\nmacrolet|locally|load-time-value|let\\*|let|labels|if|go|function|flet|eval-when|catch|block)\n(?=(\\s|\\(|\\)))  # followed by space, ( or )",
+            "captures": {
+                "2": {
+                    "name": "keyword.control.commonlisp"
+                }
+            }
+        },
+        "declaration": {
+            "match": "(?xi)\n(?<=^|\\s|\\() # preceded by space or (\n(?:type|speed|special|space|safety|optimize|notinline|inline|ignore|ignorable|ftype|dynamic-extent|declaration|debug|compilation-speed)\n(?=(\\s|\\(|\\)))  # followed by space, ( or )",
+            "name": "storage.type.function.declaration.commonlisp"
+        },
+        "type": {
+            "match": "(?xi)\n(?<=^|\\s|\\() # preceded by space or (\n(?:unsigned-byte|standard-char|standard|single-float|simple-vector|simple-string|simple-bit-vector|simple-base-string|simple-array|\nsigned-byte|short-float|long-float|keyword|fixnum|extended-char|double-float|compiled-function|boolean|bignum|base-string|base-char)\n(?=(\\s|\\(|\\)))  # followed by space, ( or )",
+            "name": "support.type.t.commonlisp"
+        },
+        "class": {
+            "match": "(?xi)\n(?<=^|\\s|\\() # preceded by space or (\n(?:two-way-stream|synonym-stream|symbol|structure-object|structure-class|string-stream|stream|standard-object|standard-method|\nstandard-generic-function|standard-class|sequence|restart|real|readtable|ratio|random-state|package|number|method|integer|hash-table|\ngeneric-function|file-stream|echo-stream|concatenated-stream|class|built-in-class|broadcast-stream|bit-vector|array)\n(?=(\\s|\\(|\\)))  # followed by space, ( or )",
+            "name": "support.class.commonlisp"
+        },
+        "condition-type": {
+            "match": "(?xi)\n(?<=^|\\s|\\() # preceded by space or (\n(?:warning|undefined-function|unbound-variable|unbound-slot|type-error|style-warning|stream-error|storage-condition|simple-warning|\nsimple-type-error|simple-error|simple-condition|serious-condition|reader-error|program-error|print-not-readable|parse-error|package-error|\nfloating-point-underflow|floating-point-overflow|floating-point-invalid-operation|floating-point-inexact|file-error|error|end-of-file|\ndivision-by-zero|control-error|condition|cell-error|arithmetic-error)\n(?=(\\s|\\(|\\)))  # followed by space, ( or )",
+            "name": "support.type.exception.commonlisp"
+        },
+        "variable": {
+            "patterns": [
+                {
+                    "match": "(?xi)\n(?<=^|\\s|\\() # preceded by space or (\n(?:\\*trace-output\\*|\\*terminal-io\\*|\\*standard-output\\*|\\*standard-input\\*|\\*readtable\\*|\\*read-suppress\\*|\\*read-eval\\*|\n\\*read-default-float-format\\*|\\*read-base\\*|\\*random-state\\*|\\*query-io\\*|\\*print-right-margin\\*|\\*print-readably\\*|\\*print-radix\\*|\\*print-pretty\\*|\n\\*print-pprint-dispatch\\*|\\*print-miser-width\\*|\\*print-lines\\*|\\*print-level\\*|\\*print-length\\*|\\*print-gensym\\*|\\*print-escape\\*|\\*print-circle\\*|\n\\*print-case\\*|\\*print-base\\*|\\*print-array\\*|\\*package\\*|\\*modules\\*|\\*macroexpand-hook\\*|\\*load-verbose\\*|\\*load-truename\\*|\\*load-print\\*|\n\\*load-pathname\\*|\\*gensym-counter\\*|\\*features\\*|\\*error-output\\*|\\*default-pathname-defaults\\*|\\*debugger-hook\\*|\\*debug-io\\*|\\*compile-verbose\\*|\n\\*compile-print\\*|\\*compile-file-truename\\*|\\*compile-file-pathname\\*|\\*break-on-signals\\*)\n(?=(\\s|\\(|\\)))  # followed by space, ( or )",
+                    "name": "string.regexp.earmuffsasterisk.commonlisp"
+                },
+                {
+                    "match": "(?xi)\n(?<=^|\\s|\\() # preceded by space or (\n(?:\\*\\*\\*|\\*\\*|\\+\\+\\+|\\+\\+|\\/\\/\\/|\\/\\/)\n(?=(\\s|\\(|\\)))  # followed by space, ( or )",
+                    "name": "variable.other.repl.commonlisp"
+                }
+            ]
+        },
+        "punctuation": {
+            "patterns": [
+                {
+                    "match": "(?xi)\n(?<=^|\\s|\\(|,@|,\\.|,) # preceded by space , ( or `,`|`,@`|`,.`\n('|`)\n(?=\\S)",
+                    "name": "variable.other.constant.singlequote.commonlisp"
+                },
+                {
+                    "match": "(?xi)\n(?<=^|\\s|\\(|,@|,\\.|,) # preceded by space , ( or `,`|`,@`|`,.`\n(?:\\:[#:A-Za-z0-9\\+\\-\\*\\/\\@\\$\\%\\^\\&\\_\\=\\<\\>\\~\\!\\?\\[\\]\\{\\}\\.]+?)\n(?=(\\s|\\(|\\)))       # followed by space, ( or )",
+                    "name": "entity.name.variable.commonlisp"
+                },
+                {
+                    "match": "(?xi)\n(?<=^|\\s|\\(|,@|,\\.|,) # preceded by space , ( or `,`|`,@`|`,.`\n(\\#)([0-9]*)\n(?=\\()",
+                    "captures": {
+                        "1": {
+                            "name": "variable.other.constant.sharpsign.commonlisp"
+                        },
+                        "2": {
+                            "name": "constant.numeric.commonlisp"
+                        }
+                    }
+                },
+                {
+                    "match": "(?xi)\n(?<=^|\\s|\\(|,@|,\\.|,) # preceded by space , ( or `,`|`,@`|`,.`\n(\\#)\n([0-9]*)\n(\\*)\n(?=0|1)",
+                    "captures": {
+                        "1": {
+                            "name": "variable.other.constant.sharpsign.commonlisp"
+                        },
+                        "2": {
+                            "name": "constant.numeric.commonlisp"
+                        },
+                        "3": {
+                            "name": "variable.other.constant.sharpsign.commonlisp"
+                        }
+                    }
+                },
+                {
+                    "match": "(?xi)\n(?<=^|\\s|\\(|,@|,\\.|,) # preceded by space , ( or `,`|`,@`|`,.`\n(\\#\\*|\\#0\\*)\n(?=(\\s|\\(|\\)))       # followed by space, ( or )",
+                    "name": "variable.other.constant.sharpsign.commonlisp"
+                },
+                {
+                    "match": "(?xi)\n(?<=^|\\s|\\(|,@|,\\.|,) # preceded by space , ( or `,`|`,@`|`,.`\n(\\#)\n([0-9]+)\n(a|A)\n(?=.)",
+                    "captures": {
+                        "1": {
+                            "name": "variable.other.constant.sharpsign.commonlisp"
+                        },
+                        "2": {
+                            "name": "constant.numeric.commonlisp"
+                        },
+                        "3": {
+                            "name": "variable.other.constant.sharpsign.commonlisp"
+                        }
+                    }
+                },
+                {
+                    "match": "(?xi)\n(?<=^|\\s|\\(|,@|,\\.|,) # preceded by space , ( or `,`|`,@`|`,.`\n(\\#)\n([0-9]+)\n(=)\n(?=.)",
+                    "captures": {
+                        "1": {
+                            "name": "variable.other.constant.sharpsign.commonlisp"
+                        },
+                        "2": {
+                            "name": "constant.numeric.commonlisp"
+                        },
+                        "3": {
+                            "name": "variable.other.constant.sharpsign.commonlisp"
+                        }
+                    }
+                },
+                {
+                    "match": "(?xi)\n(?<=^|\\s|\\(|,@|,\\.|,) # preceded by space , ( or `,`|`,@`|`,.`\n(\\#)\n([0-9]+)\n(\\#)\n(?=.)",
+                    "captures": {
+                        "1": {
+                            "name": "variable.other.constant.sharpsign.commonlisp"
+                        },
+                        "2": {
+                            "name": "constant.numeric.commonlisp"
+                        },
+                        "3": {
+                            "name": "variable.other.constant.sharpsign.commonlisp"
+                        }
+                    }
+                },
+                {
+                    "match": "(?xi)\n(?<=^|\\s|\\(|,@|,\\.|,) # preceded by space , ( or `,`|`,@`|`,.`\n(\\#(\\+|-))\n(?=\\S)",
+                    "name": "variable.other.constant.sharpsign.commonlisp"
+                },
+                {
+                    "match": "(?xi)\n(?<=^|\\s|\\(|,@|,\\.|,) # preceded by space , ( or `,`|`,@`|`,.`\n(\\#('|,|\\.|c|C|s|S|p|P))\n(?=\\S)",
+                    "name": "variable.other.constant.sharpsign.commonlisp"
+                },
+                {
+                    "match": "(?xi)\n(?<=^|\\s|\\(|,@|,\\.|,) # preceded by space , ( or `,`|`,@`|`,.`\n(\\#)\n(:)\n(?=\\S)",
+                    "captures": {
+                        "1": {
+                            "name": "support.type.package.commonlisp"
+                        }
+                    }
+                },
+                {
+                    "match": "(?xi)\n(?<=^|\\s|\\() # preceded by space or (\n(\n    (`\\#) #2\n    |\n    (`)(,@|,\\.|,)? #3, #4\n    |\n    (,@|,\\.|,) #5\n)\n(?=\\S)",
+                    "captures": {
+                        "2": {
+                            "name": "variable.other.constant.backquote.commonlisp"
+                        },
+                        "3": {
+                            "name": "variable.other.constant.backquote.commonlisp"
+                        },
+                        "4": {
+                            "name": "variable.other.constant.backquote.commonlisp"
+                        },
+                        "5": {
+                            "name": "variable.other.constant.backquote.commonlisp"
+                        }
+                    }
+                }
+            ]
+        },
+        "def-name": {
+            "patterns": [
+                {
+                    "match": "(?xi)\n(?<=^|\\s|\\()                     # preceded by (\n(defun|defsetf|defmethod|defmacro|define-symbol-macro|define-setf-expander|\ndefine-modify-macro|define-method-combination|define-compiler-macro|defgeneric)  #1 keywords\n\\s+\n(   \\(\\s*\n        ([#:A-Za-z0-9\\+\\-\\*\\/\\@\\$\\%\\^\\&\\_\\=\\<\\>\\~\\!\\?\\[\\]\\{\\}\\.]+) #3\n    \\s*\n        ((,@|,\\.|,)?) #4\n        ([#:A-Za-z0-9\\+\\-\\*\\/\\@\\$\\%\\^\\&\\_\\=\\<\\>\\~\\!\\?\\[\\]\\{\\}\\.]+?)      #6 (<3>something+ <6>name)\n    |\n        ((,@|,\\.|,)?) #7\n        ([#:A-Za-z0-9\\+\\-\\*\\/\\@\\$\\%\\^\\&\\_\\=\\<\\>\\~\\!\\?\\[\\]\\{\\}\\.]+?)      #9 name\n) #2\n(?=(\\s|\\(|\\)))",
+                    "captures": {
+                        "1": {
+                            "name": "storage.type.function.defname.commonlisp"
+                        },
+                        "3": {
+                            "name": "storage.type.function.defname.commonlisp"
+                        },
+                        "4": {
+                            "name": "variable.other.constant.defname.commonlisp"
+                        },
+                        "6": {
+                            "patterns": [
+                                {
+                                    "include": "#package"
+                                },
+                                {
+                                    "match": "\\S+?",
+                                    "name": "entity.name.function.commonlisp"
+                                }
+                            ]
+                        },
+                        "7": {
+                            "name": "variable.other.constant.defname.commonlisp"
+                        },
+                        "9": {
+                            "patterns": [
+                                {
+                                    "include": "#package"
+                                },
+                                {
+                                    "match": "\\S+?",
+                                    "name": "entity.name.function.commonlisp"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "match": "(?xi)\n(?<=^|\\s|\\()\n(deftype|defpackage|define-condition|defclass)              # keywords\n\\s+\n([#:A-Za-z0-9\\+\\-\\*\\/\\@\\$\\%\\^\\&\\_\\=\\<\\>\\~\\!\\?\\[\\]\\{\\}\\.]+?)                   # name\n(?=(\\s|\\(|\\)))",
+                    "captures": {
+                        "1": {
+                            "name": "storage.type.function.defname.commonlisp"
+                        },
+                        "2": {
+                            "name": "entity.name.type.commonlisp"
+                        }
+                    }
+                },
+                {
+                    "match": "(?xi)\n(?<=^|\\s|\\()\n(defconstant)         # keywords\n\\s+\n([#:A-Za-z0-9\\+\\-\\*\\/\\@\\$\\%\\^\\&\\_\\=\\<\\>\\~\\!\\?\\[\\]\\{\\}\\.]+?)                # name\n(?=(\\s|\\(|\\)))",
+                    "captures": {
+                        "1": {
+                            "name": "storage.type.function.defname.commonlisp"
+                        },
+                        "2": {
+                            "patterns": [
+                                {
+                                    "include": "#package"
+                                },
+                                {
+                                    "match": "\\S+?",
+                                    "name": "variable.other.constant.defname.commonlisp"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "match": "(?xi)\n(?<=^|\\s|\\()\n(defvar|defparameter) # keywords\n\\s+\n(?=(\\s|\\(|\\)))",
+                    "captures": {
+                        "1": {
+                            "name": "storage.type.function.defname.commonlisp"
+                        }
+                    }
+                },
+                {
+                    "match": "(?xi)\n(?<=^|\\s|\\()\n(defstruct)         # keywords\n\\s+\\(?\\s*\n([#:A-Za-z0-9\\+\\-\\*\\/\\@\\$\\%\\^\\&\\_\\=\\<\\>\\~\\!\\?\\[\\]\\{\\}\\.]+?)              # name\n(?=(\\s|\\(|\\)))",
+                    "captures": {
+                        "1": {
+                            "name": "storage.type.function.defname.commonlisp"
+                        },
+                        "2": {
+                            "name": "entity.name.type.commonlisp"
+                        }
+                    }
+                },
+                {
+                    "match": "(?xi)\n(?<=^|\\s|\\()\n(macrolet|labels|flet)        # keywords\n\\s+\\(\\s*\\(\\s*\n([#:A-Za-z0-9\\+\\-\\*\\/\\@\\$\\%\\^\\&\\_\\=\\<\\>\\~\\!\\?\\[\\]\\{\\}\\.]+?)                        # name\n(?=(\\s|\\(|\\)))",
+                    "captures": {
+                        "1": {
+                            "name": "keyword.control.commonlisp"
+                        },
+                        "2": {
+                            "patterns": [
+                                {
+                                    "include": "#package"
+                                },
+                                {
+                                    "match": "\\S+?",
+                                    "name": "entity.name.function.commonlisp"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        "style-guide": {
+            "patterns": [
+                {
+                    "match": "(?xi)\n(?<=^'|\\s'|\\('|,@'|,\\.'|,')\n(\\S+?)\n(\\:\\:|\\:)\n((\\+[^\\s\\+]+\\+)|(\\*[^\\s\\*]+\\*))\n(?=(\\s|\\(|\\)))",
+                    "captures": {
+                        "3": {
+                            "name": "source.commonlisp"
+                        }
+                    }
+                },
+                {
+                    "match": "(?xi)\n(?<=\\S:|^|\\s|\\() # preceded by space or (\n(\\+[^\\s\\+]+\\+)\n(?=(\\s|\\(|\\)))  # followed by space, ( or )",
+                    "name": "variable.other.constant.earmuffsplus.commonlisp"
+                },
+                {
+                    "match": "(?xi)\n(?<=\\S:|^|\\s|\\() # preceded by space or (\n(\\*[^\\s\\*]+\\*)\n(?=(\\s|\\(|\\)))  # followed by space, ( or )",
+                    "name": "string.regexp.earmuffsasterisk.commonlisp"
+                }
+            ]
+        },
+        "package": {
+            "patterns": [
+                {
+                    "match": "(?xi)\n(?<=^|\\s|\\(|,@|,\\.|,) # preceded by space , ( or `,`|`,@`|`,.`\n(\n  ([A-Za-z0-9\\+\\-\\*\\/\\@\\$\\%\\^\\&\\_\\=\\<\\>\\~\\!\\?\\[\\]\\{\\}\\.]+?)  #2\n  | \n  (\\#) #3\n)\n(?=\\:\\:|\\:)",
+                    "captures": {
+                        "2": {
+                            "name": "support.type.package.commonlisp"
+                        },
+                        "3": {
+                            "name": "support.type.package.commonlisp"
+                        }
+                    }
                 }
             ]
         }
