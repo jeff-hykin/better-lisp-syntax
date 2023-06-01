@@ -26,7 +26,7 @@ Just install the VS Code extension and the changes will automatically be applied
 # Before and After (Material Theme)
 Before                     | After 
 :-------------------------:|:-------------------------:
-![before](https://github.com/jeff-hykin/better-lisp-syntax/assets/17692058/4027e64a-2fb0-460d-a58f-10d5655cf04e) |![after](https://github.com/jeff-hykin/better-lisp-syntax/assets/17692058/d0f29d85-e4ed-493c-b871-55746133c348)
+![before](https://github.com/jeff-hykin/better-lisp-syntax/assets/17692058/4027e64a-2fb0-460d-a58f-10d5655cf04e) | ![after](https://github.com/jeff-hykin/better-lisp-syntax/assets/17692058/2f8f4d6a-49eb-4982-b1e9-6f2d4b198c94)
  
 ## Contributing
 If you'd like to help improve the syntax, take a look at `main/main.rb`. And make sure to take a look at `CONTRIBUTING.md` to get a better idea of how code works.
