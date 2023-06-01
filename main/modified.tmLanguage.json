@@ -12,7 +12,7 @@
             "include": "#comment"
         },
         {
-            "include": "#block-comment"
+            "include": "#block_comment"
         },
         {
             "include": "#string"
@@ -24,16 +24,16 @@
             "include": "#constant"
         },
         {
-            "include": "#lambda-list"
+            "include": "#lambda_list"
         },
         {
             "include": "#function"
         },
         {
-            "include": "#style-guide"
+            "include": "#style_guide"
         },
         {
-            "include": "#def-name"
+            "include": "#def_name"
         },
         {
             "include": "#macro"
@@ -42,7 +42,7 @@
             "include": "#symbol"
         },
         {
-            "include": "#special-operator"
+            "include": "#special_operator"
         },
         {
             "include": "#declaration"
@@ -54,7 +54,7 @@
             "include": "#class"
         },
         {
-            "include": "#condition-type"
+            "include": "#condition_type"
         },
         {
             "include": "#package"
@@ -88,14 +88,14 @@
                 }
             ]
         },
-        "block-comment": {
+        "block_comment": {
             "begin": "\\#\\|",
             "contentName": "comment.block.commonlisp",
             "end": "\\|\\#",
             "name": "comment",
             "patterns": [
                 {
-                    "include": "#block-comment",
+                    "include": "#block_comment",
                     "name": "comment"
                 }
             ]
@@ -206,7 +206,7 @@
                 }
             ]
         },
-        "lambda-list": {
+        "lambda_list": {
             "match": "(?xi)\n(?<=^|\\s|\\() # preceded by space or (\n(?:&[#:A-Za-z0-9\\+\\-\\*\\/\\@\\$\\%\\^\\&\\_\\=\\<\\>\\~\\!\\?\\[\\]\\{\\}\\.]+?|&whole|&rest|&optional|&key|&environment|&body|&aux|&allow-other-keys)\n(?=(\\s|\\(|\\))) # followed by space, ( or )",
             "name": "keyword.other.lambdalist.commonlisp"
         },
@@ -258,7 +258,7 @@
             "match": "(?xi)\n(?<=^|\\s|\\() # preceded by space or (\n(?:method-combination|declare)\n(?=(\\s|\\(|\\)))  # followed by space, ( or )",
             "name": "storage.type.function.symbol.commonlisp"
         },
-        "special-operator": {
+        "special_operator": {
             "match": "(?xi)\n(\\(\\s*) # preceded by (\n(unwind-protect|throw|the|tagbody|symbol-macrolet|return-from|quote|progv|progn|multiple-value-prog1|multiple-value-call|\nmacrolet|locally|load-time-value|let\\*|let|labels|if|go|function|flet|eval-when|catch|block)\n(?=(\\s|\\(|\\)))  # followed by space, ( or )",
             "captures": {
                 "2": {
@@ -278,7 +278,7 @@
             "match": "(?xi)\n(?<=^|\\s|\\() # preceded by space or (\n(?:two-way-stream|synonym-stream|symbol|structure-object|structure-class|string-stream|stream|standard-object|standard-method|\nstandard-generic-function|standard-class|sequence|restart|real|readtable|ratio|random-state|package|number|method|integer|hash-table|\ngeneric-function|file-stream|echo-stream|concatenated-stream|class|built-in-class|broadcast-stream|bit-vector|array)\n(?=(\\s|\\(|\\)))  # followed by space, ( or )",
             "name": "support.class.commonlisp"
         },
-        "condition-type": {
+        "condition_type": {
             "match": "(?xi)\n(?<=^|\\s|\\() # preceded by space or (\n(?:warning|undefined-function|unbound-variable|unbound-slot|type-error|style-warning|stream-error|storage-condition|simple-warning|\nsimple-type-error|simple-error|simple-condition|serious-condition|reader-error|program-error|print-not-readable|parse-error|package-error|\nfloating-point-underflow|floating-point-overflow|floating-point-invalid-operation|floating-point-inexact|file-error|error|end-of-file|\ndivision-by-zero|control-error|condition|cell-error|arithmetic-error)\n(?=(\\s|\\(|\\)))  # followed by space, ( or )",
             "name": "support.type.exception.commonlisp"
         },
@@ -410,7 +410,7 @@
                 }
             ]
         },
-        "def-name": {
+        "def_name": {
             "patterns": [
                 {
                     "match": "(?xi)\n(?<=^|\\s|\\()                     # preceded by (\n(defun|defsetf|defmethod|defmacro|define-symbol-macro|define-setf-expander|\ndefine-modify-macro|define-method-combination|define-compiler-macro|defgeneric)  #1 keywords\n\\s+\n(   \\(\\s*\n        ([#:A-Za-z0-9\\+\\-\\*\\/\\@\\$\\%\\^\\&\\_\\=\\<\\>\\~\\!\\?\\[\\]\\{\\}\\.]+) #3\n    \\s*\n        ((,@|,\\.|,)?) #4\n        ([#:A-Za-z0-9\\+\\-\\*\\/\\@\\$\\%\\^\\&\\_\\=\\<\\>\\~\\!\\?\\[\\]\\{\\}\\.]+?)      #6 (<3>something+ <6>name)\n    |\n        ((,@|,\\.|,)?) #7\n        ([#:A-Za-z0-9\\+\\-\\*\\/\\@\\$\\%\\^\\&\\_\\=\\<\\>\\~\\!\\?\\[\\]\\{\\}\\.]+?)      #9 name\n) #2\n(?=(\\s|\\(|\\)))",
@@ -521,7 +521,7 @@
                 }
             ]
         },
-        "style-guide": {
+        "style_guide": {
             "patterns": [
                 {
                     "match": "(?xi)\n(?<=^'|\\s'|\\('|,@'|,\\.'|,')\n(\\S+?)\n(\\:\\:|\\:)\n((\\+[^\\s\\+]+\\+)|(\\*[^\\s\\*]+\\*))\n(?=(\\s|\\(|\\)))",
